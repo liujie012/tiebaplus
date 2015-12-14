@@ -2,7 +2,7 @@
 <?php
 /**
  * Yii Application Initialization Tool
- *
+ *  test
  * In order to run in non-interactive mode:
  *
  * init --env=Development --overwrite=n
@@ -199,6 +199,8 @@ function setCookieValidationKey($root, $paths)
     }
 }
 
+
+
 function createSymlink($root, $links) {
     foreach ($links as $link => $target) {
         echo "      symlink " . $root . "/" . $target . " " . $root . "/" . $link . "\n";
@@ -207,3 +209,5 @@ function createSymlink($root, $links) {
         @symlink($root . "/" . $target, $root . "/" . $link);
     }
 }
+
+
