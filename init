@@ -201,6 +201,7 @@ function setCookieValidationKey($root, $paths)
 
 
 
+
 function createSymlink($root, $links) {
     foreach ($links as $link => $target) {
         echo "      symlink " . $root . "/" . $target . " " . $root . "/" . $link . "\n";
