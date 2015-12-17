@@ -8,6 +8,7 @@ class IndexController extends Controller{
 
 
     public function actionIndex(){
+         
        $requestUrl = 'http://www.lianyingdai.com/user/SinaUser/client_ip';
         $ch = curl_init();
         $timeout = 5;
