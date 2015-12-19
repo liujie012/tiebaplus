@@ -3,13 +3,14 @@ namespace  frontend\controllers;
 
 use Yii;
 use yii\web\Controller;
-
+use frontend\models\User;
+use linslin\yii2\curl;
 class IndexController extends Controller{
 
 
     public function actionIndex(){
          
-       $requestUrl = 'http://www.lianyingdai.com/user/SinaUser/client_ip';
+       /* $requestUrl = 'http://www.lianyingdai.com/user/SinaUser/client_ip';
         $ch = curl_init();
         $timeout = 5;
         curl_setopt($ch, CURLOPT_URL, $requestUrl);
@@ -23,7 +24,21 @@ class IndexController extends Controller{
         curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_HTTP); //使用http代理模式
         $file_contents = curl_exec($ch);
         curl_close($ch);
-        echo $file_contents;
+        echo $file_contents; */
+          
+        $curl = new curl\Curl();
 
+        //get http://example.com/
+        $response = $curl->get('http://example.com/');
+         
+       
+        
+
+    }
+    
+    public function actionNotify(){
+        print_r($_GET);
+        echo "<br>";
+        print_r($_POST);
     }
 }
