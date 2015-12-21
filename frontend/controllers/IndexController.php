@@ -5,6 +5,7 @@ use Yii;
 use yii\web\Controller;
 use frontend\models\User;
 use linslin\yii2\curl;
+use frontend\models\Tieba;
 class IndexController extends Controller{
 
 
@@ -26,11 +27,11 @@ class IndexController extends Controller{
         curl_close($ch);
         echo $file_contents; */
           
-        $curl = new curl\Curl();
-
-        //get http://example.com/
-        $response = $curl->get('http://example.com/');
-         
+       //$fid = Tieba::getTiebaFid('北京');
+       Tieba::getTiebaList(1);
+       //print_r($fid);
+       //$bduss = "BDUSS=EJWUlZsVzlCRXZ-M2lZNzY1MEF1dWcwfn5TeWdjYUl2bGNCNHhjSXk4czUtcHhXQVFBQUFBJCQAAAAAAAAAAAEAAACDewBQSkrP8ba50b8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADltdVY5bXVWd;";
+       //echo Tieba::getTbs($bduss);
        
         
 
