@@ -28,7 +28,8 @@ class IndexController extends Controller{
         echo $file_contents; */
           
        //$fid = Tieba::getTiebaFid('北京');
-       Tieba::getTiebaList(1);
+       //Tieba::getTiebaList(1);
+       Tieba::signIn(1,1);
        //print_r($fid);
        //$bduss = "BDUSS=EJWUlZsVzlCRXZ-M2lZNzY1MEF1dWcwfn5TeWdjYUl2bGNCNHhjSXk4czUtcHhXQVFBQUFBJCQAAAAAAAAAAAEAAACDewBQSkrP8ba50b8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADltdVY5bXVWd;";
        //echo Tieba::getTbs($bduss);

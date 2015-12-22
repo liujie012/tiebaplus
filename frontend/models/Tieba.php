@@ -68,7 +68,7 @@ class Tieba extends ActiveRecord{
                 $tieba_name = addslashes(htmlspecialchars(mb_convert_encoding($v, "UTF-8", "GBK")));
                 $tieba_id = self::getTiebaFid($tieba_name);
                 if($tieba_id){
-                    $tieba_liked = TiebaLiked::find()->where(['tieba_id'=>$tieba_id,'buid'=>$id])->asArray()->one();
+                    $tieba_liked = TiebaLiked::find()->where(['tieba_id'=>$tieba_id,'buid'=>$id])->one();
                     if(!$tieba_liked){
                         $tieba_liked = new TiebaLiked();
                         $tieba_liked->buid = $id;
@@ -89,8 +89,34 @@ class Tieba extends ActiveRecord{
     
     
     
-    public static function signIn(){
+    public static function signIn($buid,$tieba_id){
+        $curl = new curl\Curl();
+        $bduus = BaiduUser::getBduss($buid);
+        $curl->setOption(CURLOPT_COOKIE, "BDUSS=".$bduus);
+        $curl->setOption(CURLOPT_USERAGENT, 'Fucking iPhone/1.0 BadApple/99.1');
+        $curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+        $url = 'http://c.tieba.baidu.com/c/c/forum/sign';
         
+        //$tieba_liked = TiebaLiked::findOne($tieba_id)->toArray();
+        $tieba = Tieba::findOne($tieba_id)->toArray();
+        
+        $temp = array(
+            'BDUSS' => trim($bduus),
+            '_client_id' => '03-00-DA-59-05-00-72-96-06-00-01-00-04-00-4C-43-01-00-34-F4-02-00-BC-25-09-00-4E-36',
+            '_client_type' => '4',
+            '_client_version' => '1.2.1.17',
+            '_phone_imei' => '540b43b59d21b7a4824e1fd31b08e9a6',
+            'fid' => $tieba['fid'],
+            'kw' => $tieba['name'],
+            'net_type' => '3',
+            'tbs' => self::getTbs($bduus)
+        );
+        $post_string =http_build_query($temp,'','');
+        $temp['sign'] = strtoupper(md5($post_string.'tiebaclient!!!'));
+        $curl->setOption(CURLOPT_POSTFIELDS, http_build_query($temp));
+        //print_r($curl->getOptions());exit;
+        $response = $curl->post($url);
+        print_r($response);
     }
     
     
