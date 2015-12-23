@@ -1,15 +1,15 @@
 <?php
 namespace  frontend\controllers;
-
 use Yii;
 use yii\web\Controller;
 use frontend\models\User;
-use linslin\yii2\curl;
 use frontend\models\Tieba;
-class IndexController extends Controller{
 
+class IndexController extends Controller
+{
 
-    public function actionIndex(){
+    public function actionIndex()
+    {
          
        /* $requestUrl = 'http://www.lianyingdai.com/user/SinaUser/client_ip';
         $ch = curl_init();
@@ -29,18 +29,11 @@ class IndexController extends Controller{
           
        //$fid = Tieba::getTiebaFid('北京');
        //Tieba::getTiebaList(1);
-       Tieba::signIn(1,1);
+       Tieba::signInAll(1);
        //print_r($fid);
        //$bduss = "BDUSS=EJWUlZsVzlCRXZ-M2lZNzY1MEF1dWcwfn5TeWdjYUl2bGNCNHhjSXk4czUtcHhXQVFBQUFBJCQAAAAAAAAAAAEAAACDewBQSkrP8ba50b8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADltdVY5bXVWd;";
        //echo Tieba::getTbs($bduss);
        
-        
-
     }
     
-    public function actionNotify(){
-        print_r($_GET);
-        echo "<br>";
-        print_r($_POST);
-    }
 }
