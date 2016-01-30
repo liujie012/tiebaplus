@@ -104,7 +104,7 @@ class Tieba extends ActiveRecord{
         $bduus = BaiduUser::getBduss($buid);
         $curl->setOption(CURLOPT_COOKIE, "BDUSS=".$bduus);
         $curl->setOption(CURLOPT_USERAGENT, 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/600.1.3 (KHTML, like Gecko) Version/8.0 Mobile/12A4345d Safari/600.1.4');
-        $curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+        $curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded','sid: fa47438c22e378d6'));
         $url = 'http://c.tieba.baidu.com/c/c/forum/sign';
         
         //$tieba_liked = TiebaLiked::findOne($tieba_id)->toArray();
@@ -137,6 +137,10 @@ class Tieba extends ActiveRecord{
         }
     }
     
+    /**
+     * 所有贴吧签到
+     * @param int $buid
+     */
     public static function signInAll($buid)
     {
         $tieba_liked = TiebaLiked::find()->where(['buid'=>$buid])->asArray()->all();
@@ -149,6 +153,80 @@ class Tieba extends ActiveRecord{
         }
     }
     
+    
+    public static function post($buid, $tieba_id, $title, $content){
+        $curl = new curl\Curl();
+        $bduus = BaiduUser::getBduss($buid);
+        $curl->setOption(CURLOPT_COOKIE, "BDUSS=".$bduus);
+        $curl->setOption(CURLOPT_USERAGENT, 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/600.1.3 (KHTML, like Gecko) Version/8.0 Mobile/12A4345d Safari/600.1.4');
+        $curl->setOption(CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+        $url = 'http://c.tieba.baidu.com/c/c/thread/add';
+        
+        //$tieba_liked = TiebaLiked::findOne($tieba_id)->toArray();
+        $tieba = Tieba::findOne($tieba_id)->toArray();
+        
+        $post = array(
+            /* 'BDUSS' => trim($bduus),
+            'title' => urlencode($title),
+            'content' => urlencode($content),
+            'subapp_type' => "tieba",
+            '_client_id' => '03-00-DA-59-05-00-72-96-06-00-01-00-04-00-4C-43-01-00-34-F4-02-00-BC-25-09-00-4E-36',
+            '_client_type' => '1',
+            '_client_version' => '1.2.1.17',
+            '_phone_imei' => '540b43b59d21b7a4824e1fd31b08e9a6',
+            'fid' => $tieba['fid'],
+            'kw' => urlencode($tieba['name']),
+            'net_type' => '1', */
+            "anonymous" => "0",
+            "title" => "%E6%B5%8B%E8%AF%95",
+            "m_cost" => "219.920993",
+            "m_logid" => "1664654236",
+            "subapp_type" => "tieba",
+            "m_size_d" => "332",
+            "_timestamp" => "1453818477597",
+            "brand" => "iPhone",
+            "_os_version" => "8.2",
+            "_phone_newimei" => "26E17728D81B6B50E207E17D04F1FF4A",
+            "_client_version" => "7.1.0",
+            "BDUSS" => "lnbWJhVTlaWVJicENNaGpsYnlsU0JScW01aGpKWlZnWDE5T3RxUlRGQ3dBMnhXQVFBQUFBJCQAAAAAAAAAAAEAAAAvgXkwt8rQoc3IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALB2RFawdkRWZF",
+            "fid" => "1363364",
+            "is_location" => "1",
+            "voice_md5" => "",
+            "during_time" => "",
+            "tbs" => "f367d4f402d486811447769827",
+            "net_type" => "1",
+            "cuid" => "26E17728D81B6B50E207E17D04F1FF4A",
+            "kw" => "%E5%B9%BF%E5%B7%9Efc",
+            "sign" => "EF5105CD2C62DB361DBDA3CE758A1565",
+            "_client_type" => "1",
+            "new_vcode" => "1",
+            "is_ntitle" => "0",
+            "from" => "appstore",
+            "_client_id" => "wappc_1452144434786_865",
+            "m_size_u" => "1199",
+            "brand_type" => "iPhone%206%20Plus",
+            "_phone_imei" => "26E17728D81B6B50E207E17D04F1FF4A",
+            "vcode_tag" => "11",
+            "m_api" => "c%2Fs%2Finpv",
+            "content" => "%E6%B5%8B%E8%AF%95%E6%B5%8B%E8%AF%95"
+            
+        );
+        $str = '';
+        foreach($post as $k=>$v) {
+            $str .= $k.'='.$v;
+        }
+        $post['sign'] = strtoupper(md5($str.'tiebaclient!!!'));
+        $curl->setOption(CURLOPT_POSTFIELDS, http_build_query($post));
+        //print_r($curl->getOptions());exit;
+        $response = $curl->post($url);
+        $response = json_decode($response, true);
+        print_r($response);
+        if($response['error_code'] == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     
     
     

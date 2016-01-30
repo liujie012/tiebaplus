@@ -1,39 +1,51 @@
 <?php
-
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \common\models\LoginForm */
-
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Login';
+$this->title = 'login';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="./css/login.css">
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<title><?= Html::encode($this->title) ?> </title>
+</head>
+<body>
+<div class="container">
 
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-
-                <?= $form->field($model, 'username') ?>
-
-                <?= $form->field($model, 'password')->passwordInput() ?>
-
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
-
-                <div style="color:#999;margin:1em 0">
-                    If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
-                </div>
-
-                <div class="form-group">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                </div>
-
-            <?php ActiveForm::end(); ?>
-        </div>
-    </div>
+<?php $form = ActiveForm::begin(
+	    ['id'=>'login-form',
+	    'class'=>'form-signin',
+	     'action'=>['login/login'],
+	     'options'=>['class'=>'form-signin'],
+	     'fieldConfig'=> ['labelOptions' => ['class' => 'sr-only']],
+	     
+	]);?>
+	
+		<h2 class="form-sign-heading">请登录</h2>
+		<?= $form->field($model, 'username',['inputOptions' => ['placeholder' => '用户名']])?>
+		<?= $form->field($model,'password',['inputOptions'=>['placeholder'=>'密码']])->passwordInput()?>
+		<div class="checkbox">
+			<label>
+			<input type="checkbox" name="remember" vlaue="记住密码">记住密码
+			</label>
+		</div>
+		<button  class="btn btn-lg btn-primary btn-block">登录</button >
+	<?php ActiveForm::end();?>
 </div>
+
+
+
+</body>
+</html>
