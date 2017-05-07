@@ -10,7 +10,8 @@
  * ln requirements.php ../requirements.php
  */
 
-// you may need to adjust this path to the correct Yii framework path
+//test
+
 $frameworkPath = dirname(__FILE__) . '/vendor/yiisoft/yii2';
 //echo 1;exit; echo 1;exit;;
 if (!is_dir($frameworkPath)) {
