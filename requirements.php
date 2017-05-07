@@ -12,6 +12,9 @@
 
 //test
 
+
+
+
 $frameworkPath = dirname(__FILE__) . '/vendor/yiisoft/yii2';
 //echo 1;exit; echo 1;exit;;
 if (!is_dir($frameworkPath)) {
